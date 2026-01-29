@@ -1,0 +1,43 @@
+<%- include("partials/header");-%>
+
+<section class="relative min-h-[70vh] flex flex-col items-center justify-center px-4 sm:px-6 py-20 sm:py-28 overflow-hidden">
+  <div class="absolute inset-0 bg-gradient-to-b from-black via-neutral-950 to-black pointer-events-none"></div>
+  <div class="absolute inset-[-10%] bg-[radial-gradient(circle_at_top,rgba(250,204,21,0.24),transparent_55%),radial-gradient(circle_at_10%_90%,rgba(148,163,184,0.22),transparent_55%)] animate-glow-orbit pointer-events-none"></div>
+
+  <!-- Flying cards background -->
+  <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+    <div class="absolute w-14 h-20 sm:w-16 sm:h-[5.5rem] rounded-lg bg-gradient-to-br from-amber-50 to-amber-100/90 border border-amber-200/60 shadow-lg flex items-center justify-center text-2xl text-slate-800 opacity-40 animate-float-card-1" style="top:12%;left:8%;animation-delay:0s">♠</div>
+    <div class="absolute w-14 h-20 sm:w-16 sm:h-[5.5rem] rounded-lg bg-gradient-to-br from-rose-50 to-rose-100/90 border border-rose-200/60 shadow-lg flex items-center justify-center text-2xl text-rose-900 opacity-40 animate-float-card-2" style="top:18%;right:12%;animation-delay:2s">♥</div>
+    <div class="absolute w-14 h-20 sm:w-16 sm:h-[5.5rem] rounded-lg bg-gradient-to-br from-amber-50 to-amber-100/90 border border-amber-200/60 shadow-lg flex items-center justify-center text-2xl text-slate-800 opacity-40 animate-float-card-3" style="top:55%;left:5%;animation-delay:4s">♦</div>
+    <div class="absolute w-14 h-20 sm:w-16 sm:h-[5.5rem] rounded-lg bg-gradient-to-br from-slate-50 to-slate-100/90 border border-slate-200/60 shadow-lg flex items-center justify-center text-2xl text-slate-800 opacity-40 animate-float-card-1" style="top:60%;right:8%;animation-delay:1s">♣</div>
+    <div class="absolute w-14 h-20 sm:w-16 sm:h-[5.5rem] rounded-lg bg-gradient-to-br from-rose-50 to-rose-100/90 border border-rose-200/60 shadow-lg flex items-center justify-center text-2xl text-rose-900 opacity-40 animate-float-card-2" style="top:25%;left:15%;animation-delay:3s">♥</div>
+    <div class="absolute w-14 h-20 sm:w-16 sm:h-[5.5rem] rounded-lg bg-gradient-to-br from-amber-50 to-amber-100/90 border border-amber-200/60 shadow-lg flex items-center justify-center text-2xl text-slate-800 opacity-40 animate-float-card-3" style="top:70%;left:25%;animation-delay:5s">♠</div>
+    <div class="absolute w-14 h-20 sm:w-16 sm:h-[5.5rem] rounded-lg bg-gradient-to-br from-slate-50 to-slate-100/90 border border-slate-200/60 shadow-lg flex items-center justify-center text-2xl text-slate-800 opacity-40 animate-float-card-1" style="top:8%;right:28%;animation-delay:2.5s">♦</div>
+    <div class="absolute w-14 h-20 sm:w-16 sm:h-[5.5rem] rounded-lg bg-gradient-to-br from-amber-50 to-amber-100/90 border border-amber-200/60 shadow-lg flex items-center justify-center text-2xl text-slate-800 opacity-40 animate-float-card-2" style="top:75%;right:18%;animation-delay:1.5s">♣</div>
+    <div class="absolute w-14 h-20 sm:w-16 sm:h-[5.5rem] rounded-lg bg-gradient-to-br from-rose-50 to-rose-100/90 border border-rose-200/60 shadow-lg flex items-center justify-center text-2xl text-rose-900 opacity-40 animate-float-card-3" style="top:35%;right:6%;animation-delay:3.5s">♥</div>
+    <div class="absolute w-14 h-20 sm:w-16 sm:h-[5.5rem] rounded-lg bg-gradient-to-br from-slate-50 to-slate-100/90 border border-slate-200/60 shadow-lg flex items-center justify-center text-2xl text-slate-800 opacity-40 animate-float-card-1" style="top:42%;left:10%;animation-delay:0.5s">♠</div>
+    <div class="absolute w-14 h-20 sm:w-16 sm:h-[5.5rem] rounded-lg bg-gradient-to-br from-amber-50 to-amber-100/90 border border-amber-200/60 shadow-lg flex items-center justify-center text-2xl text-slate-800 opacity-40 animate-float-card-2" style="top:82%;left:12%;animation-delay:4.5s">♦</div>
+    <div class="absolute w-14 h-20 sm:w-16 sm:h-[5.5rem] rounded-lg bg-gradient-to-br from-slate-50 to-slate-100/90 border border-slate-200/60 shadow-lg flex items-center justify-center text-2xl text-slate-800 opacity-40 animate-float-card-3" style="top:15%;left:22%;animation-delay:1s">♣</div>
+  </div>
+
+  <div class="relative z-10 max-w-3xl mx-auto text-center space-y-8 animate-fade-up">
+    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-amber-100 tracking-tight drop-shadow-[0_0_32px_rgba(250,204,21,0.35)]">
+      Welcome to Magic Land
+    </h1>
+    <p class="text-lg sm:text-xl text-slate-300 max-w-2xl mx-auto">
+      Discover and sell premium playing card decks. Built for magicians, cardists, and collectors.
+    </p>
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+      <a href="/decks"
+        class="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-primary-500 to-primary-600 px-8 py-4 text-lg font-semibold text-white shadow-xl shadow-primary-500/30 hover:shadow-primary-500/50 hover:from-primary-600 hover:to-primary-700 transition-all">
+        Magic awaits you
+      </a>
+      <a href="/register"
+        class="inline-flex items-center justify-center rounded-xl border border-slate-600 bg-slate-800/50 px-8 py-4 text-lg font-semibold text-slate-200 hover:bg-slate-800 hover:border-slate-500 transition-all">
+        Get started
+      </a>
+    </div>
+  </div>
+</section>
+
+<%- include("partials/footer");-%>

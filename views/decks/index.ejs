@@ -1,0 +1,80 @@
+<%- include("../partials/header");-%>
+
+<section class="max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
+  <header class="grid gap-10 lg:grid-cols-[1.2fr_1fr] items-center mb-14">
+    <div class="space-y-5">
+      <span class="inline-flex items-center rounded-full border border-primary-500/30 bg-primary-500/10 px-3.5 py-1.5 text-sm font-medium text-primary-300">
+        New drop · Limited runs
+      </span>
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-50 tracking-tight">
+        Magia Con Carta
+      </h1>
+      <p class="text-base sm:text-lg text-slate-300 max-w-xl leading-relaxed">
+        Discover decks loved by magicians and cardists for over a decade. Neon inks, butter-smooth stock, and designs that hit different on camera.
+      </p>
+      <div class="flex flex-wrap gap-3 pt-2">
+        <a href="/decks/new"
+          class="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-primary-500 to-primary-600 px-6 py-3 text-base font-semibold text-white shadow-lg shadow-primary-500/25 hover:shadow-primary-500/40 hover:from-primary-600 hover:to-primary-700 transition-all">
+          + Add a new deck
+        </a>
+        <span class="inline-flex items-center gap-2 rounded-xl border border-slate-700 bg-slate-800/50 px-4 py-3 text-sm text-slate-300">
+          <span class="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          Live marketplace
+        </span>
+      </div>
+    </div>
+    <div class="relative">
+      <div class="absolute inset-0 -z-10 bg-gradient-to-tr from-primary-500/15 to-accent-500/10 blur-3xl opacity-80"></div>
+      <div class="relative rounded-3xl border border-slate-800 bg-slate-900/70 p-6 shadow-2xl shadow-black/30 flex flex-col items-center gap-5">
+        <div class="flex -space-x-5">
+          <div class="h-24 w-16 rotate-[-10deg] rounded-2xl bg-gradient-to-br from-slate-700 to-slate-900 border border-slate-600 flex items-center justify-center text-2xl shadow-xl">♠</div>
+          <div class="h-24 w-16 rotate-[6deg] rounded-2xl bg-gradient-to-br from-primary-500/80 to-primary-800 border border-primary-400/40 flex items-center justify-center text-2xl shadow-xl">♥</div>
+          <div class="h-24 w-16 rotate-[2deg] rounded-2xl bg-gradient-to-br from-accent-500/80 to-amber-700 border border-amber-300/40 flex items-center justify-center text-2xl shadow-xl">♦</div>
+        </div>
+        <p class="text-sm text-slate-400 text-center">Perfect for flourishes, shots, and Friday night jams.</p>
+      </div>
+    </div>
+  </header>
+
+  <div>
+    <% if (decks.length === 0) { %>
+      <div class="rounded-2xl border border-slate-800 bg-slate-900/50 px-8 py-14 text-center">
+        <p class="text-slate-300 text-lg">No decks yet. Be the first to drop something legendary.</p>
+        <a href="/decks/new" class="mt-4 inline-flex items-center text-primary-400 font-semibold hover:text-primary-300 transition-colors">Add a deck →</a>
+      </div>
+    <% } else { %>
+      <div class="grid grid-cols-2 gap-3 sm:gap-5 sm:grid-cols-3 lg:grid-cols-4">
+        <% decks.forEach(function(deck){ %>
+          <article class="group relative rounded-xl sm:rounded-2xl border border-slate-800 bg-slate-900/60 overflow-hidden shadow shadow-black/20 sm:shadow-md hover:border-slate-700 hover:shadow-lg hover:shadow-amber-900/20 transition-all duration-300">
+            <div class="relative aspect-[3/4] sm:aspect-[3/4] overflow-hidden">
+              <img src="<%= deck.image %>" alt="<%= deck.name %>"
+                class="h-full w-full object-cover transition duration-500 group-hover:scale-105" />
+              <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent"></div>
+              <div class="absolute top-1.5 left-1.5 sm:top-3 sm:left-3">
+                <span class="inline-flex items-center gap-1 rounded-full bg-slate-950/80 px-1.5 py-0.5 sm:px-2.5 sm:py-1 text-[10px] sm:text-xs font-medium text-slate-200 border border-slate-700/80">
+                  <span class="h-1 w-1 sm:h-1.5 sm:w-1.5 rounded-full bg-emerald-400"></span>
+                  In stock
+                </span>
+              </div>
+              <div class="absolute bottom-1.5 left-1.5 right-1.5 sm:bottom-3 sm:left-3 sm:right-3 flex items-end justify-between gap-1 sm:gap-2">
+                <div class="min-w-0 flex-1">
+                  <h2 class="text-xs sm:text-base font-semibold text-slate-50 truncate"><%= deck.name %></h2>
+                  <p class="text-[10px] sm:text-sm text-slate-300/90 truncate">by <%= deck.author.username %></p>
+                </div>
+                <span class="shrink-0 rounded bg-slate-950/90 px-1.5 py-0.5 sm:px-2.5 sm:py-1 text-[10px] sm:text-sm font-semibold text-emerald-300 border border-emerald-500/30">$<%= deck.price %></span>
+              </div>
+            </div>
+            <div class="px-2 py-1.5 sm:px-4 sm:py-3 flex items-center justify-between border-t border-slate-800/80 bg-slate-900/40">
+              <p class="text-[10px] sm:text-sm text-slate-400 truncate"><span class="font-medium text-slate-300"><%= deck.stock %></span> left</p>
+              <a href="/decks/<%= deck._id %>" class="inline-flex items-center gap-0.5 rounded-md bg-slate-800 px-2 py-1 sm:px-3 sm:py-1.5 text-[10px] sm:text-sm font-medium text-slate-200 hover:bg-primary-600 hover:text-white transition-colors">
+                View <span class="text-[8px] sm:text-xs opacity-80">→</span>
+              </a>
+            </div>
+          </article>
+        <% }) %>
+      </div>
+    <% } %>
+  </div>
+</section>
+
+<%- include("../partials/footer");-%>
