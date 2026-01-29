@@ -2,7 +2,7 @@
 <html lang="en" class="h-full bg-slate-950">
   <head>
     <meta charset="UTF-8" />
-    <title>Presto — The Land of Magic</title>
+    <title>Deck Deals — The Land of Magic</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -67,8 +67,8 @@
                 ♠
               </span>
               <div class="flex flex-col">
-                <span class="font-semibold text-amber-200 text-lg tracking-tight">Presto</span>
-                <span class="text-xs text-slate-400 hidden sm:block">Magic decks for the bold</span>
+                <span class="font-semibold text-amber-200 text-lg tracking-tight">Deck Deals</span>
+                <span class="text-xs text-slate-400 hidden sm:block">Where magicians save</span>
               </div>
             </a>
             <div class="flex items-center gap-3 sm:gap-5">
@@ -90,19 +90,35 @@
         </div>
       </nav>
 
-      <div class="max-w-6xl mx-auto w-full px-4 sm:px-6 py-4 space-y-3">
+      <div id="flash-messages" class="max-w-6xl mx-auto w-full px-4 sm:px-6 py-4 space-y-3">
         <% if(error && error.length>0){ %>
-          <div class="rounded-xl border border-red-500/30 bg-red-500/10 px-5 py-3.5 text-red-100">
-            <!-- <p class="font-semibold">Something went wrong</p> -->
+          <div class="flash-message rounded-xl border border-red-500/30 bg-red-500/10 px-5 py-3.5 text-red-100 transition-opacity duration-300">
             <p class="mt-0.5 text-red-100/90"><%= error %></p>
           </div>
         <% } %>
         <% if(success && success.length>0){ %>
-          <div class="rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-5 py-3.5 text-emerald-100">
+          <div class="flash-message rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-5 py-3.5 text-emerald-100 transition-opacity duration-300">
             <p class="font-semibold">Success</p>
             <p class="mt-0.5 text-emerald-100/90"><%= success %></p>
           </div>
         <% } %>
       </div>
+      <script>
+        (function() {
+          var container = document.getElementById('flash-messages');
+          if (!container) return;
+          var messages = container.querySelectorAll('.flash-message');
+          if (messages.length === 0) return;
+          setTimeout(function() {
+            messages.forEach(function(el) {
+              el.style.opacity = '0';
+              setTimeout(function() {
+                el.remove();
+                if (container.children.length === 0) container.remove();
+              }, 300);
+            });
+          }, 5000);
+        })();
+      </script>
 
       <main class="flex-1 w-full">

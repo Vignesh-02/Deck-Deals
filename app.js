@@ -24,6 +24,13 @@ app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"));
 app.use(flash());
 
+
+// Make moment available in all templates
+app.locals.moment = require("moment-timezone");
+
+
+
+
 // changed testing
 
 // PASSPORT CONFIGURATION

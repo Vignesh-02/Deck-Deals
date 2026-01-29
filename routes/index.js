@@ -38,7 +38,7 @@ router.post("/register", function (req, res) {
     passport.authenticate("local")(req, res, function () {
       req.flash(
         "success",
-        "Welcome to The Land of Magic, magical " + user.username
+        "Welcome to The Land of Magic, " + user.username
       );
       res.redirect("/decks");
     });
