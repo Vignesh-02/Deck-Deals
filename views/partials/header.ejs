@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-slate-950">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Presto — The Land of Magic</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: { 500: '#FACC15', 600: '#EAB308', 700: '#CA8A04' },
+              accent: { 500: '#A855F7', 600: '#7C3AED' }
+            },
+            fontFamily: {
+              sans: ['Inter', 'system-ui', 'sans-serif']
+            },
+            keyframes: {
+              'fade-up': {
+                '0%': { opacity: '0', transform: 'translateY(12px) scale(0.97)' },
+                '100%': { opacity: '1', transform: 'translateY(0) scale(1)' }
+              },
+              'glow-orbit': {
+                '0%,100%': { opacity: '0.35', transform: 'translate3d(0,0,0) scale(1)' },
+                '50%': { opacity: '0.8', transform: 'translate3d(0,-10px,0) scale(1.05)' }
+              },
+              'float-card-1': {
+                '0%,100%': { transform: 'translate(0,0) rotate(-6deg)' },
+                '25%': { transform: 'translate(15px,-25px) rotate(4deg)' },
+                '50%': { transform: 'translate(-20px,-50px) rotate(-2deg)' },
+                '75%': { transform: 'translate(20px,-25px) rotate(5deg)' }
+              },
+              'float-card-2': {
+                '0%,100%': { transform: 'translate(0,0) rotate(8deg)' },
+                '33%': { transform: 'translate(-30px,15px) rotate(-3deg)' },
+                '66%': { transform: 'translate(10px,35px) rotate(6deg)' }
+              },
+              'float-card-3': {
+                '0%,100%': { transform: 'translate(0,0) rotate(-4deg)' },
+                '50%': { transform: 'translate(25px,-35px) rotate(7deg)' }
+              }
+            },
+            animation: {
+              'fade-up': 'fade-up 0.7s ease-out 0.1s both',
+              'glow-orbit': 'glow-orbit 7s ease-in-out infinite',
+              'float-card-1': 'float-card-1 16s ease-in-out infinite',
+              'float-card-2': 'float-card-2 20s ease-in-out infinite',
+              'float-card-3': 'float-card-3 18s ease-in-out infinite'
+            }
+          }
+        }
+      }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="data:image/x-icon;base64,AAABAAEAEBAAAAAAAABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAABZWVn/QkJC/ygoKNAdHR0WAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAARkZG0llZWf9CQkL/KCgo0R0dHRUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADc3NxZGRkbSWVlZ/0JCQv8oKCjQHR0dFQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANzc3FkZGRtFZWVn/QkJC/y0tLc6NjY0WAAAAAAAAAAAAAAAAAKvVAwCs2Q0ArPgAAAAAAAAAAAAAAAAAAAAAAAAAAAA3NzcWRkZG0V1dXf2tra34tbW10KCgoBYAptICALDeJAC25FIAuOd6AL3wBwD//wAAAAAAAAAAAAAAAAAAAAAAAAAAADc3NxakpKTN7+/v/9vb2/+1tbXRkKCkGAC452gAwPDqBcf45BfP/mwcz/8IAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAurq6FtDQ0NLw8PD/29vb/7W1tdEmwuplFM394S/U/9su1f88Hs3/AgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC6uroW0NDQ0fDw8P/a29v/nrrB4lHF4khl3/9iceL/DQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAqv8AAKzZBK25vBjQ0NDR8PDw/9vb2/+1tbXRnamrGXvj/wEAAAAAAAAAAAAAAAAAAAAAAAAAAABlyQAArt0dALjmMgC762sAu+wburq6FtDQ0NLw8PD/29vb2K+vrxoAp9YLAKvXFACP4AAAAAAAAAAAAAAAAAAAd+4AALrqPQLC89sLyPnpJ9L9YFHc/wi6uroW0tLSrOPw9B4Ar98LALPhXwC25YEBv/QJCtP/AQAAAAAAAAAADcf/ACTS/kot0/7mStn/8Vjc/4xg3f8VAAAAAAAAAAAArdwiALbkogC97eUDxfbqF8/+nSnU/y0AAAAAAAAAABLK/wE82P8mXt7/TJPo/5SS5v8WONf/AAAAAAAAAAAAAKziBQHC83kKyfn7JdL9/DfW/5Mv1v8PAAAAAAAAAAAAAAAAAAAAAKb3/wHA9P8RxOv/AgAAAAAAAAAAAAAAAAXG/wEg0v9kL9T/vlvd/8Z44/9hd+j/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMuf8AM9b/HDzY/xKF5v8bn+r/I5bw/wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH/8AAA//AACH/wAAw/8AAOH/AADwzwAA+E8AAPw/AAD+HwAA/x8AAPO7AADx4QAA+/EAAP/zAAD//wAA//8AAA==" rel="icon" type="image/x-icon" />
+  </head>
+  <body class="min-h-full bg-gradient-to-b from-black via-neutral-950 to-black text-slate-100 text-base antialiased font-sans">
+    <div class="min-h-screen flex flex-col">
+      <nav class="sticky top-0 z-30 border-b border-yellow-500/15 bg-black/85 backdrop-blur-md">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex items-center justify-between h-16">
+            <a href="/decks" class="flex items-center gap-3 group">
+              <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-primary-500 via-amber-300 to-primary-700 text-black font-bold shadow-lg shadow-amber-300/50 group-hover:shadow-amber-200/70 transition-shadow">
+                ♠
+              </span>
+              <div class="flex flex-col">
+                <span class="font-semibold text-amber-200 text-lg tracking-tight">Presto</span>
+                <span class="text-xs text-slate-400 hidden sm:block">Magic decks for the bold</span>
+              </div>
+            </a>
+            <div class="flex items-center gap-3 sm:gap-5">
+              <% if(!currentUser){ %>
+                <a href="/login" class="text-slate-300 hover:text-white font-medium transition-colors">Log in</a>
+                <a href="/register" class="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-primary-500 to-primary-600 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-primary-500/25 hover:shadow-primary-500/40 hover:from-primary-600 hover:to-primary-700 transition-all">
+                  Join the magic
+                </a>
+              <% } else { %>
+                <span class="hidden sm:inline text-slate-400 text-sm">Signed in as</span>
+                <span class="inline-flex items-center gap-2 rounded-xl border border-slate-700/80 bg-slate-800/50 px-3 py-1.5 text-sm font-medium text-slate-200">
+                  <span class="flex h-6 w-6 items-center justify-center rounded-lg bg-primary-600/30 text-primary-300 text-xs font-semibold"><%= currentUser.username[0].toUpperCase() %></span>
+                  <%= currentUser.username %>
+                </span>
+                <a href="/logout" class="text-slate-400 hover:text-red-300 font-medium text-sm transition-colors">Sign out</a>
+              <% } %>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <div class="max-w-6xl mx-auto w-full px-4 sm:px-6 py-4 space-y-3">
+        <% if(error && error.length>0){ %>
+          <div class="rounded-xl border border-red-500/30 bg-red-500/10 px-5 py-3.5 text-red-100">
+            <!-- <p class="font-semibold">Something went wrong</p> -->
+            <p class="mt-0.5 text-red-100/90"><%= error %></p>
+          </div>
+        <% } %>
+        <% if(success && success.length>0){ %>
+          <div class="rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-5 py-3.5 text-emerald-100">
+            <p class="font-semibold">Success</p>
+            <p class="mt-0.5 text-emerald-100/90"><%= success %></p>
+          </div>
+        <% } %>
+      </div>
+
+      <main class="flex-1 w-full">

@@ -1,0 +1,66 @@
+<%- include("../partials/header");-%>
+
+<section class="max-w-2xl mx-auto px-4 sm:px-6 py-10 sm:py-12">
+  <div class="rounded-3xl border border-slate-800 bg-slate-900/60 p-6 sm:p-8 shadow-2xl shadow-black/20">
+    <div class="mb-8">
+      <h1 class="text-2xl sm:text-3xl font-semibold text-slate-50 tracking-tight">Add a new deck</h1>
+      <p class="mt-2 text-slate-400">List your deck for magicians and cardists.</p>
+    </div>
+
+    <form action="/decks" method="POST" class="space-y-5">
+      <div>
+        <label for="name" class="block text-sm font-medium text-slate-300 mb-1.5">Deck name</label>
+        <input id="name" name="name" type="text" required placeholder="e.g. V7 Orbit"
+          class="w-full rounded-xl border border-slate-700 bg-slate-800/80 px-4 py-3 text-slate-100 placeholder:text-slate-500 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/30 outline-none transition" />
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+        <div>
+          <label for="mobile" class="block text-sm font-medium text-slate-300 mb-1.5">Contact number</label>
+          <input id="mobile" name="mobile" type="text" required placeholder="Your phone"
+            class="w-full rounded-xl border border-slate-700 bg-slate-800/80 px-4 py-3 text-slate-100 placeholder:text-slate-500 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/30 outline-none transition" />
+        </div>
+        <div>
+          <label for="email" class="block text-sm font-medium text-slate-300 mb-1.5">Email</label>
+          <input id="email" name="email" type="email" required placeholder="you@example.com"
+            class="w-full rounded-xl border border-slate-700 bg-slate-800/80 px-4 py-3 text-slate-100 placeholder:text-slate-500 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/30 outline-none transition" />
+        </div>
+      </div>
+      <div>
+        <label for="address" class="block text-sm font-medium text-slate-300 mb-1.5">Address</label>
+        <input id="address" name="address" type="text" required placeholder="Shipping address"
+          class="w-full rounded-xl border border-slate-700 bg-slate-800/80 px-4 py-3 text-slate-100 placeholder:text-slate-500 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/30 outline-none transition" />
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+        <div>
+          <label for="price" class="block text-sm font-medium text-slate-300 mb-1.5">Price ($)</label>
+          <input id="price" name="price" type="number" min="0.01" step="0.01" required placeholder="10.00"
+            class="w-full rounded-xl border border-slate-700 bg-slate-800/80 px-4 py-3 text-slate-100 placeholder:text-slate-500 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/30 outline-none transition" />
+        </div>
+        <div>
+          <label for="stock" class="block text-sm font-medium text-slate-300 mb-1.5">Stock (decks)</label>
+          <input id="stock" name="stock" type="number" min="0" step="1" required placeholder="50"
+            class="w-full rounded-xl border border-slate-700 bg-slate-800/80 px-4 py-3 text-slate-100 placeholder:text-slate-500 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/30 outline-none transition" />
+        </div>
+      </div>
+      <div>
+        <label for="image" class="block text-sm font-medium text-slate-300 mb-1.5">Image URL</label>
+        <input id="image" name="image" type="url" required placeholder="https://..."
+          class="w-full rounded-xl border border-slate-700 bg-slate-800/80 px-4 py-3 text-slate-100 placeholder:text-slate-500 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/30 outline-none transition" />
+      </div>
+      <div>
+        <label for="description" class="block text-sm font-medium text-slate-300 mb-1.5">Description</label>
+        <textarea id="description" name="description" rows="3" placeholder="Describe your deck..."
+          class="w-full rounded-xl border border-slate-700 bg-slate-800/80 px-4 py-3 text-slate-100 placeholder:text-slate-500 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/30 outline-none transition resize-none"></textarea>
+      </div>
+      <div class="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-4 pt-2">
+        <a href="/decks" class="text-slate-400 hover:text-slate-200 font-medium text-center sm:text-left transition-colors">← Back to decks</a>
+        <button type="submit"
+          class="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-primary-500 to-primary-600 px-6 py-3 text-base font-semibold text-white shadow-lg shadow-primary-500/25 hover:shadow-primary-500/40 hover:from-primary-600 hover:to-primary-700 transition-all">
+          Add deck
+        </button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<%- include("../partials/footer");-%>
