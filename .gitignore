@@ -2,3 +2,8 @@
 !.env.example
 /node_modules
 .qodo
+
+# Redis dump / append-only files
+dump.rdb
+appendonly.aof
+appendonly*.aof

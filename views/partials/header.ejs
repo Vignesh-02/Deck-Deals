@@ -83,7 +83,11 @@
                   <span class="flex h-6 w-6 items-center justify-center rounded-lg bg-primary-600/30 text-primary-300 text-xs font-semibold"><%= currentUser.username[0].toUpperCase() %></span>
                   <%= currentUser.username %>
                 </span>
-                <a href="/logout" class="text-slate-400 hover:text-red-300 font-medium text-sm transition-colors">Sign out</a>
+                <form action="/logout" method="POST" class="inline">
+                  <button type="submit" class="text-slate-400 hover:text-red-300 font-medium text-sm transition-colors">
+                    Sign out
+                  </button>
+                </form>
               <% } %>
             </div>
           </div>

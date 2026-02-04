@@ -1,7 +1,10 @@
 const env = require("dotenv");
 env.config();
 
-// 12 July 2022 2 AM MongoDB has been fixed now.
+const { createClient } = require("redis");
+const { RedisStore } = require("connect-redis");
+const session = require("express-session");
+
 
 // another deployment
 // another mock deployment
@@ -15,8 +18,23 @@ var express = require("express"),
     LocalStrategy = require("passport-local"),
     User = require("./models/user");
 
+// Trust proxy so cookies work behind reverse proxies (e.g. load balancers, nginx)
+app.set("trust proxy", 1);
+
 const url = process.env.MONGODB_URL;
 mongoose.connect(url);
+
+// Redis client for session store
+const redisUrl = process.env.REDIS_URL || "redis://localhost:6379";
+const redisClient = createClient({ url: redisUrl });
+redisClient.connect().catch(function (err) {
+    console.error("Redis connection error:", err);
+});
+
+const redisStore = new RedisStore({
+    client: redisClient,
+    prefix: "deck-deals:sess:",
+});
 
 app.use(express.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
@@ -33,12 +51,18 @@ app.locals.moment = require("moment-timezone");
 
 // changed testing
 
-// PASSPORT CONFIGURATION
+// PASSPORT CONFIGURATION – session stored in Redis, cookie set on client
 app.use(
-    require("express-session")({
-        secret: "Once again Rusty wins cutest dog!",
+    session({
+        store: redisStore,
+        secret: process.env.SESSION_SECRET || "Once again Rusty wins cutest dog!",
         resave: false,
         saveUninitialized: false,
+        cookie: {
+            secure: process.env.NODE_ENV === "production",
+            httpOnly: true,
+            maxAge: 1000 * 60 * 60 * 24, // 1 day
+        },
     }),
 );
 app.use(passport.initialize());
