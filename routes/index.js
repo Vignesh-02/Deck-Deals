@@ -6,7 +6,6 @@ var User=require("../models/user");
 //root route
 router.get("/",function(req,res){
     res.render("landing",{currentUser:req.user});
-   // res.send("This will be a landing page soon");
 }); 
 
 //show register form
@@ -35,7 +34,11 @@ router.post("/register", function (req, res) {
       req.flash("error", err.message);
       return res.render("register", { currentUser: req.user });
     }
-    passport.authenticate("local")(req, res, function () {
+    passport.authenticate("local")(req, res, function (err) {
+      if (err) {
+        req.flash("error", "Error signing you in after registration");
+        return res.redirect("/login");
+      }
       req.flash(
         "success",
         "Welcome to The Land of Magic, " + user.username
@@ -45,12 +48,10 @@ router.post("/register", function (req, res) {
   });
 });
 
-//show login form
 router.get("/login",function(req, res) {
     res.render("login",{currentUser:req.user});
 });
 
-//handling login logic
 router.post(
   "/login",
   passport.authenticate("local", {
@@ -60,11 +61,28 @@ router.post(
   })
 );
 
-//logout route
-router.get("/logout",function(req, res) {
-    req.logout();
-    req.flash("success","Logged you out!");
-    res.redirect("/decks");
+// logout route – log user out and rotate session so flash still works
+router.post("/logout", function (req, res) {
+    req.logout(function (err) {
+        if (err) {
+            req.flash("error", "Error logging out");
+            return res.redirect("/decks");
+        }
+
+        // Regenerate a fresh anonymous session:
+        // - old session (and its Redis key) is destroyed by express-session
+        // - new empty session is created for this anonymous user
+        // This allows us to safely use flash and redirect.
+        req.session.regenerate(function (err) {
+            if (err) {
+                console.error("Error regenerating session on logout:", err);
+                return res.redirect("/decks");
+            }
+
+            req.flash("success", "Logged you out!");
+            res.redirect("/decks");
+        });
+    });
 });
 
 
