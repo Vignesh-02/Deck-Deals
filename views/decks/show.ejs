@@ -27,7 +27,7 @@
           Ready to ship worldwide
         </p>
       </div>
-      <% if(currentUser && deck.author.id.equals(currentUser._id)){ %>
+      <% if (currentUser && deck.author && deck.author.id && deck.author.id.toString() === currentUser._id.toString()) { %>
         <div class="space-y-3">
           <a href="/decks/<%= deck._id %>/edit"
             class="block w-full text-center rounded-xl border border-slate-700 bg-slate-800/80 py-2.5 text-sm font-semibold text-slate-200 hover:bg-primary-600 hover:border-primary-500 hover:text-white transition-all">
@@ -91,11 +91,13 @@
                   <div class="flex items-center gap-2 shrink-0">
                     <span class="text-xs text-slate-500">
                             <%
-                                var commentDate = comment._id.getTimestamp();
+                                var commentDate = comment.createdAt
+                                    ? new Date(comment.createdAt)
+                                    : (typeof comment._id.getTimestamp === 'function' ? comment._id.getTimestamp() : null);
                             %>
-                            <%= moment(commentDate).fromNow() %>
+                            <%= commentDate ? moment(commentDate).fromNow() : '—' %>
                     </span>
-                    <% if(currentUser && comment.author.id.equals(currentUser._id)){ %>
+                    <% if (currentUser && comment.author && comment.author.id && String(comment.author.id) === String(currentUser._id)) { %>
                       <a href="/decks/<%= deck._id %>/comments/<%= comment._id %>/edit" class="rounded-lg border border-slate-600 bg-slate-700/50 px-2.5 py-1 text-xs font-medium text-slate-200 hover:border-primary-500 hover:text-primary-200 transition-colors">Edit</a>
                       <form action="/decks/<%= deck._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST" class="inline">
                         <button type="submit" class="rounded-lg bg-red-600/90 px-2.5 py-1 text-xs font-medium text-white hover:bg-red-500 transition-colors">Delete</button>

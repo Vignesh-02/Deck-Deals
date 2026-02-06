@@ -24,6 +24,10 @@ var deckSchema=new mongoose.Schema({
     ]
 });
 
+// Indexes for common access patterns
+deckSchema.index({ "author.id": 1 });
+deckSchema.index({ name: 1 });
 
 module.exports=mongoose.model("decks",deckSchema);
+    
     
