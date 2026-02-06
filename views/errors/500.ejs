@@ -1,0 +1,17 @@
+<%- include("../partials/header");-%>
+
+<section class="max-w-2xl mx-auto px-4 sm:px-6 py-16 sm:py-24 text-center">
+  <div class="rounded-3xl border border-slate-800 bg-slate-900/60 p-8 sm:p-12 shadow-2xl shadow-black/20">
+    <p class="text-6xl sm:text-7xl font-bold text-slate-600">500</p>
+    <h1 class="mt-4 text-2xl sm:text-3xl font-semibold text-slate-100">Something went wrong</h1>
+    <p class="mt-2 text-slate-400"><%= message %></p>
+    <% if (stack && typeof stack === 'string') { %>
+    <pre class="mt-6 p-4 rounded-xl bg-black/40 text-left text-xs text-slate-400 overflow-auto max-h-48"><%= stack %></pre>
+    <% } %>
+    <a href="/decks" class="mt-8 inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-primary-500 to-primary-600 px-6 py-3 text-base font-semibold text-white shadow-lg shadow-primary-500/25 hover:shadow-primary-500/40 transition-all">
+      Back to decks
+    </a>
+  </div>
+</section>
+
+<%- include("../partials/footer");-%>

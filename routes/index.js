@@ -1,7 +1,9 @@
-var express=require("express");
-var router=express.Router();
-var passport=require("passport");
-var User=require("../models/user");
+var express = require("express");
+var router = express.Router();
+var passport = require("passport");
+var User = require("../models/user");
+var { registerValidators, loginValidators, handleValidationErrors } = require("../middleware/validators");
+var logger = require("../utils/logger");
 
 //root route
 router.get("/",function(req,res){
@@ -15,24 +17,17 @@ router.get("/register",function(req,res){
 
 
 //handling user sign up
-router.post("/register", function (req, res) {
+router.post("/register", registerValidators, function (req, res) {
+  var validationError = handleValidationErrors(req, res);
+  if (validationError) {
+    return res.render("register", { currentUser: req.user, error: validationError });
+  }
   const { username, password } = req.body;
-
-  if (!username || username.length < 5) {
-    req.flash("error", "Username must be at least 5 characters long.");
-    return res.render("register", { currentUser: req.user });
-  }
-
-  if (!password || password.length < 8) {
-    req.flash("error", "Password must be at least 8 characters long.");
-    return res.render("register", { currentUser: req.user });
-  }
 
   User.register(new User({ username }), password, function (err, user) {
     if (err) {
-      console.log(err);
-      req.flash("error", err.message);
-      return res.render("register", { currentUser: req.user });
+      logger.warn({ err }, "Register failed");
+      return res.render("register", { currentUser: req.user, error: err.message });
     }
     passport.authenticate("local")(req, res, function (err) {
       if (err) {
@@ -41,7 +36,7 @@ router.post("/register", function (req, res) {
       }
       req.flash(
         "success",
-        "Welcome to The Land of Magic, " + user.username
+        "Welcome to Deck Deals, The Land of Magic, " + user.username
       );
       res.redirect("/decks");
     });
@@ -52,14 +47,23 @@ router.get("/login",function(req, res) {
     res.render("login",{currentUser:req.user});
 });
 
-router.post(
-  "/login",
-  passport.authenticate("local", {
-    successRedirect: "/decks",
-    failureRedirect: "/login",
-    failureFlash: true
-  })
-);
+router.post("/login", loginValidators, function (req, res, next) {
+  if (handleValidationErrors(req, res)) {
+    return res.redirect("/login");
+  }
+  passport.authenticate("local", function (err, user, info) {
+    if (err) return next(err);
+    if (!user) {
+      req.flash("error", info?.message || "Invalid username or password.");
+      return res.redirect("/login");
+    }
+    req.login(user, function (err) {
+      if (err) return next(err);
+      req.flash("success", "Welcome back to Deck Deals, " + user.username + "!");
+      return res.redirect("/decks");
+    });
+  })(req, res, next);
+});
 
 // logout route – log user out and rotate session so flash still works
 router.post("/logout", function (req, res) {
@@ -75,7 +79,7 @@ router.post("/logout", function (req, res) {
         // This allows us to safely use flash and redirect.
         req.session.regenerate(function (err) {
             if (err) {
-                console.error("Error regenerating session on logout:", err);
+                logger.error({ err }, "Error regenerating session on logout");
                 return res.redirect("/decks");
             }
 

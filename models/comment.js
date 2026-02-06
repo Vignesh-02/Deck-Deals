@@ -9,6 +9,9 @@ var commentSchema=new mongoose.Schema({
     },
     username: String
     }
-});  
+}, { timestamps: true });  
+
+// Index comments by author for faster lookups
+commentSchema.index({ "author.id": 1 });
  
-module.exports=mongoose.model("Comment",commentSchema); 
+module.exports=mongoose.model("Comment",commentSchema);  

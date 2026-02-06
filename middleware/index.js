@@ -1,6 +1,6 @@
-var Deck=require("../models/deck");
-var Comment=require("../models/comment");
-
+var Deck = require("../models/deck");
+var Comment = require("../models/comment");
+var logger = require("../utils/logger");
 
 // all the middleware goes here
 var middlewareObj={};
@@ -22,7 +22,7 @@ middlewareObj.checkDeckOwnership = async function(req,res,next){
                 return res.redirect("back");
             }
         } catch(err){
-            console.log(err);
+            logger.error({ err }, "checkDeckOwnership: find deck");
             req.flash("error","Deck not found");
             return res.redirect("back");
         }
@@ -49,7 +49,7 @@ middlewareObj.checkCommentOwnership = async function(req,res,next){
                 return res.redirect("back");
             }
         } catch(err){
-            console.log(err);
+            logger.error({ err }, "checkCommentOwnership: find comment");
             return res.redirect("back");
         }
     }else{
