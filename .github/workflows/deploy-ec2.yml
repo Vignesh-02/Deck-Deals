@@ -1,0 +1,26 @@
+# Deploy to EC2 on push to main.
+# Requires GitHub Secrets: EC2_HOST, EC2_SSH_KEY, (optional) EC2_USER.
+# For private repos: set up a deploy key on EC2 so git pull works (see docs/DEPLOY-AWS-EC2.md).
+
+name: Deploy to EC2
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER || 'ubuntu' }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            cd /home/ubuntu/Deck-Deals || exit 1
+            git pull origin main
+            npm ci --omit=dev
+            pm2 restart deckdeals
+            pm2 status

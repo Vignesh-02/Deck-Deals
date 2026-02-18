@@ -215,12 +215,62 @@ sudo systemctl status nginx
 ## 10. After code changes
 
 ```bash
-cd ~/deck-deals
+cd /home/ubuntu/Deck-Deals
 git pull
 npm ci --omit=dev
 pm2 restart deckdeals
 ```
 
-If you use a **CI/CD** (e.g. GitHub Actions), you can add a step to SSH and run these commands after deploy.
+---
 
-You’re done: the site is hosted on EC2, domain **deckdeals.in** points to it, and HTTPS is handled by Nginx + Let's Encrypt at minimal cost.
+## 11. Auto-deploy with GitHub Actions
+
+A workflow (`.github/workflows/deploy-ec2.yml`) runs on every **push to `main`**: it SSHs into EC2, pulls the repo, runs `npm ci --omit=dev`, and restarts PM2.
+
+### 11.1 – GitHub Secrets
+
+In your GitHub repo: **Settings** → **Secrets and variables** → **Actions** → **New repository secret**. Add:
+
+| Secret        | Value |
+|---------------|--------|
+| **EC2_HOST**  | EC2 public IP (e.g. `54.242.110.87`) |
+| **EC2_SSH_KEY** | **Full contents** of your `.pem` file (copy-paste the entire file, including `-----BEGIN ... KEY-----` and `-----END ... KEY-----`) |
+| **EC2_USER**  | (optional) SSH user; default is `ubuntu` |
+
+### 11.2 – Repo path and branch
+
+The workflow assumes the app on EC2 is in **`/home/ubuntu/Deck-Deals`** and pulls **`main`**. If your branch is `master`, edit `.github/workflows/deploy-ec2.yml` and change `branches: [main]` and `git pull origin main` to `master`.
+
+### 11.3 – Private repo: deploy key on EC2
+
+For a **private** repo, EC2 must be able to `git pull` without a password:
+
+1. **On EC2** (SSH in), generate a deploy key (if you don't have one):
+   ```bash
+   ssh-keygen -t ed25519 -C "ec2-deploy" -f ~/.ssh/deploy_key -N ""
+   cat ~/.ssh/deploy_key.pub
+   ```
+2. In **GitHub** → repo → **Settings** → **Deploy keys** → **Add deploy key**: paste the **public** key, allow read access.
+3. On EC2, use that key for this repo:
+   ```bash
+   cd /home/ubuntu/Deck-Deals
+   git remote set-url origin git@github.com:YOUR_USERNAME/deck-deals.git
+   eval $(ssh-agent)
+   ssh-add ~/.ssh/deploy_key
+   # Test: git pull
+   ```
+4. So the key is used for git on EC2, add to `~/.ssh/config` on EC2:
+   ```text
+   Host github.com
+     HostName github.com
+     User git
+     IdentityFile ~/.ssh/deploy_key
+     IdentitiesOnly yes
+   ```
+   Then `git pull` from `/home/ubuntu/Deck-Deals` will use the deploy key.
+
+For a **public** repo, no deploy key is needed; the workflow's SSH step only needs **EC2_HOST** and **EC2_SSH_KEY** (and optionally **EC2_USER**).
+
+---
+
+You’re done: the site is hosted on EC2, domain **deckdeals.in** points to it, HTTPS is handled by Nginx + Let's Encrypt, and pushes to `main` auto-deploy via GitHub Actions.
