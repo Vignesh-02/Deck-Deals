@@ -233,7 +233,7 @@ In your GitHub repo: **Settings** → **Secrets and variables** → **Actions** 
 
 | Secret        | Value |
 |---------------|--------|
-| **EC2_HOST**  | EC2 public IP (e.g. `54.242.110.87`) |
+| **EC2_HOST**  | EC2 public IP |
 | **EC2_SSH_KEY** | **Full contents** of your `.pem` file (copy-paste the entire file, including `-----BEGIN ... KEY-----` and `-----END ... KEY-----`) |
 | **EC2_USER**  | (optional) SSH user; default is `ubuntu` |
 
@@ -272,5 +272,20 @@ For a **private** repo, EC2 must be able to `git pull` without a password:
 For a **public** repo, no deploy key is needed; the workflow's SSH step only needs **EC2_HOST** and **EC2_SSH_KEY** (and optionally **EC2_USER**).
 
 ---
+
+## 12. Stopping the instance to save costs
+
+EC2 instances cannot "sleep," but you can **stop** the instance when you don't need the site. While stopped you are **not** charged for compute (instance hours). You **are** still charged for the EBS volume (disk) and, depending on region/setup, possibly for an Elastic IP if it's not attached to a running instance.
+
+**Stop / Start**
+
+- **Console:** EC2 → Instances → select instance → **Instance state** → **Stop instance** (or **Start instance**).
+- **CLI:** `aws ec2 stop-instances --instance-ids i-xxxxxxxxx` and `aws ec2 start-instances --instance-ids i-xxxxxxxxx`.
+
+**Important:** Stop/start usually gives the instance a **new public IP**. If you don't use an **Elastic IP** attached to this instance, update your domain's A record (e.g. deckdeals.in at Hostinger) to the new public IP after each start. If you use an Elastic IP and keep it attached, the same IP is used after start and no DNS change is needed.
+
+
+---
+
 
 You’re done: the site is hosted on EC2, domain **deckdeals.in** points to it, HTTPS is handled by Nginx + Let's Encrypt, and pushes to `main` auto-deploy via GitHub Actions.
