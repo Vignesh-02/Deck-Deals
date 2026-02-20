@@ -6,7 +6,7 @@ Host the app on a single **EC2 t2.micro** (free tier for 12 months, then ~\$8–
 
 ## 1. Prerequisites
 
-- AWS account
+- You need an AWS account
 - Domain **deckdeals.in** on Hostinger (you have this)
 - MongoDB (e.g. Atlas free tier) and Redis (e.g. Redis Cloud free tier) – keep using your current URLs
 - Git repo of this code (e.g. GitHub)
